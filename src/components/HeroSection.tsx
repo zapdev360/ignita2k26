@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import CountdownTimer from "./CountdownTimer";
 import FloatingBadges from "./FloatingBadges";
-import CodeRain from "./CodeRain";
+import RAOneScene from "./RAOneCharacter";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,10 +38,10 @@ const HeroSection = () => {
         scrollTrigger: {
           trigger: pinRef.current,
           start: "top top",
-          end: "+=2000",
+          end: "+=1000",
           pin: true,          // pins pinRef in place
           pinSpacing: true,   // adds scroll distance after the pin
-          scrub: 1.2,
+          scrub: 0.6,
           anticipatePin: 1,
         },
       });
@@ -68,15 +68,15 @@ const HeroSection = () => {
         // ② Center text (inside ring) fades out quickly
         .to(
           centerTextRef.current,
-          { opacity: 0, scale: 1.3, ease: "power1.in", duration: 0.35 },
+          { opacity: 0, scale: 1.3, ease: "power1.in", duration: 0.15 },
           0
         )
         // ③ Full hero content fades in as circle opens
         .fromTo(
           heroContentRef.current,
           { opacity: 0, y: 25 },
-          { opacity: 1, y: 0, ease: "power2.out", duration: 0.5 },
-          0.4
+          { opacity: 1, y: 0, ease: "power2.out", duration: 0.25 },
+          0.2
         );
     });
 
@@ -93,7 +93,7 @@ const HeroSection = () => {
       } else {
         clearInterval(timer);
       }
-    }, 48);
+    }, 15);
     return () => clearInterval(timer);
   }, []);
 
@@ -112,13 +112,22 @@ const HeroSection = () => {
         style={{ position: "absolute", inset: 0, zIndex: 0 }}
         className="bg-background"
       >
-        <CodeRain />
+        <RAOneScene />
+        {/* Arc Reactor orb behind heading */}
+        <div
+          className="arc-reactor"
+          style={{ width: 700, height: 700, top: "50%", left: "50%", transform: "translate(-50%, -55%)" }}
+        />
+        <div
+          className="arc-reactor-core"
+          style={{ width: 160, height: 160 }}
+        />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-primary/8 blur-[140px] animate-pulse-glow" />
         <div
           className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-secondary/8 blur-[120px] animate-pulse-glow"
           style={{ animationDelay: "1.2s" }}
         />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.025)_1px,transparent_1px)] bg-[size:60px_60px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,30,0,0.018)_1px,transparent_1px),linear-gradient(90deg,rgba(255,30,0,0.018)_1px,transparent_1px)] bg-[size:60px_60px]" />
       </div>
 
       {/* ── NEON OUTER RING ── */}
@@ -132,9 +141,9 @@ const HeroSection = () => {
           height: "clamp(280px, 36vw, 420px)",
           transform: "translate(-50%, -50%)",
           borderRadius: "50%",
-          border: "2px solid hsl(200 95% 65% / 0.95)",
+          border: "2px solid hsl(0 95% 60% / 0.95)",
           boxShadow:
-            "0 0 24px hsl(200 95% 65% / 0.8), 0 0 70px hsl(200 95% 65% / 0.4), 0 0 140px hsl(200 95% 65% / 0.15), inset 0 0 24px hsl(200 95% 65% / 0.08)",
+            "0 0 24px hsl(0 95% 60% / 0.8), 0 0 70px hsl(0 95% 60% / 0.4), 0 0 140px hsl(0 95% 60% / 0.15), inset 0 0 24px hsl(0 95% 60% / 0.08)",
           zIndex: 15,
           pointerEvents: "none",
           transformOrigin: "center center",
@@ -153,9 +162,9 @@ const HeroSection = () => {
           height: "clamp(210px, 27vw, 315px)",
           transform: "translate(-50%, -50%)",
           borderRadius: "50%",
-          border: "1px solid hsl(260 85% 75% / 0.55)",
+          border: "1px solid hsl(15 85% 55% / 0.55)",
           boxShadow:
-            "0 0 16px hsl(260 85% 75% / 0.45), 0 0 50px hsl(260 85% 75% / 0.2)",
+            "0 0 16px hsl(15 85% 55% / 0.45), 0 0 50px hsl(15 85% 55% / 0.2)",
           zIndex: 15,
           pointerEvents: "none",
           transformOrigin: "center center",
@@ -173,7 +182,8 @@ const HeroSection = () => {
           transform: "translate(-50%, -50%)",
           zIndex: 20,
           textAlign: "center",
-          pointerEvents: "none",
+          pointerEvents: "auto",
+          cursor: "default",
           willChange: "opacity, transform",
           width: "max-content",
         }}
@@ -188,21 +198,26 @@ const HeroSection = () => {
             <Sparkles size={10} className="text-primary" />
             <span>Scroll to Reveal</span>
           </div>
-          <h1
-            className="font-heading font-bold leading-[1.05] tracking-tight"
+          <motion.h1
+            className="font-heading font-bold leading-[1.05] tracking-tight select-none"
             style={{ fontSize: "clamp(2rem, 5.5vw, 4rem)" }}
+            whileHover={{ 
+              scale: 1.08,
+              rotate: [0, -1, 1, -1, 0],
+              transition: { duration: 0.3 }
+            }}
           >
             <span
-              className="gradient-text block"
+              className="gradient-text block relative"
               style={{
                 filter:
-                  "drop-shadow(0 0 18px hsl(200 95% 65% / 0.85))",
+                  "drop-shadow(0 0 18px hsl(0 95% 60% / 0.85))",
               }}
             >
               IGNITIA
             </span>
             <span className="text-white/90 block">2K26</span>
-          </h1>
+          </motion.h1>
           <p className="text-white/35 text-[11px] tracking-[0.22em] uppercase mt-1">
             Aug 1–2 · UEM Kolkata
           </p>

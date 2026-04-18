@@ -15,16 +15,16 @@
     --popover: 0 0% 6%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 200 95% 65%;
+    --primary: 0 95% 60%;
     --primary-foreground: 0 0% 4%;
 
-    --secondary: 260 85% 75%;
+    --secondary: 20 85% 60%;
     --secondary-foreground: 0 0% 98%;
 
     --muted: 0 0% 12%;
     --muted-foreground: 0 0% 65%;
 
-    --accent: 330 85% 70%;
+    --accent: 0 90% 55%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
@@ -32,31 +32,31 @@
 
     --border: 0 0% 14%;
     --input: 0 0% 14%;
-    --ring: 200 95% 65%;
+    --ring: 0 95% 60%;
 
     --radius: 0.85rem;
 
-    --neon-blue: 200 95% 65%;
-    --neon-cyan: 180 90% 65%;
-    --neon-purple: 260 85% 75%;
-    --neon-pink: 330 85% 70%;
+    --neon-blue: 0 95% 60%;
+    --neon-cyan: 15 90% 60%;
+    --neon-purple: 20 85% 60%;
+    --neon-pink: 0 90% 55%;
 
     --glass-bg: 0 0% 6%;
     --glass-border: 0 0% 14%;
 
-    --glow-blue: 0 0 30px hsl(200 95% 65% / 0.25);
-    --glow-cyan: 0 0 30px hsl(180 90% 65% / 0.25);
-    --glow-purple: 0 0 30px hsl(260 85% 75% / 0.25);
-    --glow-pink: 0 0 30px hsl(330 85% 70% / 0.25);
+    --glow-blue: 0 0 30px hsl(0 95% 60% / 0.25);
+    --glow-cyan: 0 0 30px hsl(15 90% 60% / 0.25);
+    --glow-purple: 0 0 30px hsl(20 85% 60% / 0.25);
+    --glow-pink: 0 0 30px hsl(0 90% 55% / 0.25);
 
     --sidebar-background: 0 0% 5%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 200 95% 65%;
+    --sidebar-primary: 0 95% 60%;
     --sidebar-primary-foreground: 0 0% 4%;
     --sidebar-accent: 0 0% 12%;
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 0 0% 14%;
-    --sidebar-ring: 200 95% 65%;
+    --sidebar-ring: 0 95% 60%;
   }
 }
 
@@ -108,7 +108,7 @@
 
   .glow-button {
     @apply relative overflow-hidden bg-primary text-primary-foreground font-semibold px-8 py-3 rounded-lg transition-all duration-300;
-    box-shadow: 0 0 20px hsl(199 89% 48% / 0.3), 0 0 60px hsl(199 89% 48% / 0.1);
+    box-shadow: 0 0 20px hsl(0 89% 50% / 0.3), 0 0 60px hsl(0 89% 50% / 0.1);
   }
 
   .glow-button:hover {
@@ -122,7 +122,7 @@
 
   .glow-button-secondary:hover {
     @apply bg-primary/10;
-    box-shadow: 0 0 20px hsl(199 89% 48% / 0.2);
+    box-shadow: 0 0 20px hsl(0 89% 50% / 0.2);
   }
 
   .section-padding {
@@ -144,9 +144,9 @@
     background: linear-gradient(
       45deg,
       transparent 40%,
-      hsl(199 89% 48% / 0.03) 45%,
-      hsl(199 89% 48% / 0.06) 50%,
-      hsl(199 89% 48% / 0.03) 55%,
+      hsl(0 89% 50% / 0.03) 45%,
+      hsl(0 89% 50% / 0.06) 50%,
+      hsl(0 89% 50% / 0.03) 55%,
       transparent 60%
     );
     animation: shimmer 6s ease-in-out infinite;
@@ -164,10 +164,10 @@
     border-radius: inherit;
     background: linear-gradient(
       var(--glow-angle, 0deg),
-      hsl(199 89% 48% / 0.3),
+      hsl(0 89% 50% / 0.3),
       transparent 40%,
       transparent 60%,
-      hsl(263 70% 58% / 0.3)
+      hsl(20 70% 50% / 0.3)
     );
     z-index: -1;
     animation: borderRotate 4s linear infinite;
@@ -222,7 +222,7 @@
     left: 0;
     width: 100%;
     height: 2px;
-    background: hsl(199 89% 48%);
+    background: hsl(0 89% 50%);
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.3s ease;
@@ -271,11 +271,11 @@
 
 @layer utilities {
   .text-glow-blue {
-    text-shadow: 0 0 10px hsl(199 89% 48% / 0.5), 0 0 40px hsl(199 89% 48% / 0.2);
+    text-shadow: 0 0 10px hsl(0 89% 50% / 0.5), 0 0 40px hsl(0 89% 50% / 0.2);
   }
 
   .text-glow-purple {
-    text-shadow: 0 0 10px hsl(263 70% 58% / 0.5), 0 0 40px hsl(263 70% 58% / 0.2);
+    text-shadow: 0 0 10px hsl(20 70% 50% / 0.5), 0 0 40px hsl(20 70% 50% / 0.2);
   }
 }
 
@@ -289,12 +289,12 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(199 89% 48% / 0.3);
+  background: hsl(0 89% 50% / 0.3);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(199 89% 48% / 0.5);
+  background: hsl(0 89% 50% / 0.5);
 }
 
 /* Particle canvas */
@@ -338,8 +338,8 @@
 }
 
 @keyframes pulseCta {
-  0%, 100% { box-shadow: 0 0 20px hsl(199 89% 48% / 0.3), 0 0 60px hsl(199 89% 48% / 0.1); }
-  50% { box-shadow: 0 0 30px hsl(199 89% 48% / 0.6), 0 0 80px hsl(199 89% 48% / 0.3); }
+  0%, 100% { box-shadow: 0 0 20px hsl(0 89% 50% / 0.3), 0 0 60px hsl(0 89% 50% / 0.1); }
+  50% { box-shadow: 0 0 30px hsl(0 89% 50% / 0.6), 0 0 80px hsl(0 89% 50% / 0.3); }
 }
 
 @keyframes ctaSweep {
@@ -363,7 +363,7 @@
 }
 
 @keyframes neonFlicker {
-  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; text-shadow: 0 0 10px hsl(199 89% 48% / 0.5), 0 0 40px hsl(199 89% 48% / 0.2); }
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; text-shadow: 0 0 10px hsl(0 89% 50% / 0.5), 0 0 40px hsl(0 89% 50% / 0.2); }
   20%, 24%, 55% { opacity: 0.4; text-shadow: none; }
 }
 
@@ -401,7 +401,7 @@
   left: 0;
   width: 100%;
   height: 4px;
-  background: linear-gradient(90deg, transparent, hsl(199 89% 48% / 0.06), transparent);
+  background: linear-gradient(90deg, transparent, hsl(0 89% 50% / 0.06), transparent);
   animation: scanline 8s linear infinite;
   pointer-events: none;
   z-index: 50;

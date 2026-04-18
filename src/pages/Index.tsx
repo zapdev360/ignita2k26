@@ -15,17 +15,25 @@ import CursorTrail from "@/components/CursorTrail";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ParallaxSection from "@/components/ParallaxSection";
 import PageTransition from "@/components/PageTransition";
+import RAOneArtifacts3D from "@/components/RAOneArtifacts3D";
+import FloatingTechElements from "@/components/FloatingTechElements";
+import AnnouncementBar from "@/components/AnnouncementBar";
 
 const Index = () => (
   <>
     <MouseSpotlight />
     <CursorTrail />
     <PageTransition>
-      <div className="min-h-screen bg-background scanline-overlay">
+      <div className="min-h-screen bg-background scanline-overlay" style={{ paddingBottom: 52 }}>
+        {/* Fixed layers */}
+        <RAOneArtifacts3D />
+        <FloatingTechElements />
         <ParticleField />
         <ShootingStars />
         <AnimatedBlobs />
         <ScrollProgress />
+
+        {/* Page content */}
         <Navbar />
         <HeroSection />
         <Highlights />
@@ -41,6 +49,9 @@ const Index = () => (
         <Footer />
       </div>
     </PageTransition>
+
+    {/* Sticky bottom announcement bar — outside PageTransition so it's always on top */}
+    <AnnouncementBar />
   </>
 );
 
