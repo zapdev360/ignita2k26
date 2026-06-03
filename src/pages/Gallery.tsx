@@ -16,6 +16,7 @@ import ScrollProgress from "@/components/ScrollProgress";
 import SphereGallery from "@/components/SphereGallery";
 import { ImageGallery } from "@/components/ui/image-gallery";
 import { CircularGallery, type GalleryItem } from "@/components/ui/circular-gallery-2";
+import { PhotoGallery } from "@/components/ui/gallery";
 
 const galleryItems = [
   // Events
@@ -136,10 +137,13 @@ const galleryCategories: GalleryItem[] = [
 ];
 
 const Gallery = () => {
+  const [activeView, setActiveView] = useState<"sphere" | "explore">("sphere");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selected, setSelected] = useState<(typeof galleryItems)[0] | null>(null);
 
-  const filtered = selectedCategory
+  const filtered = selectedCategory === "All Stories"
+    ? galleryItems
+    : selectedCategory
     ? galleryItems.filter((i) => i.category === selectedCategory)
     : [];
 
@@ -151,58 +155,114 @@ const Gallery = () => {
         <ScrollProgress />
         <Navbar />
 
-        <section className="relative min-h-[50vh] flex items-center justify-center pt-16">
+        {/* Hero Header Section */}
+        <section className="relative pt-24 pb-12 flex items-center justify-center min-h-[40vh]">
           <div className="container mx-auto px-4 text-center relative z-10">
-            <motion.h1
-              initial={{ opacity: 0, scale: 0.7 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ type: "spring" }}
-              className="font-heading text-5xl md:text-7xl font-bold mb-4"
-            >
-              <span className="gradient-text">Gallery</span>
-            </motion.h1>
             <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="text-muted-foreground"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-[10px] md:text-xs text-orange-500 uppercase tracking-[0.4em] mb-3 font-semibold font-mono"
             >
-              Moments from previous editions of IGNITIA.
+              MEMORIES & MOMENTS — IGNITIA &apos;26
             </motion.p>
-          </div>
-        </section>
+            <div className="relative inline-block mb-3 px-4">
+              {/* Futuristic Cyber brackets */}
+              <div className="absolute left-0 -top-2 w-3 h-3 border-t-2 border-l-2 border-orange-500/50" />
+              <div className="absolute right-0 -top-2 w-3 h-3 border-t-2 border-r-2 border-orange-500/50" />
+              <div className="absolute left-0 -bottom-2 w-3 h-3 border-b-2 border-l-2 border-orange-500/50" />
+              <div className="absolute right-0 -bottom-2 w-3 h-3 border-b-2 border-r-2 border-orange-500/50" />
 
-        {/* 3D Image Sphere Section */}
-        <section className="py-12 relative overflow-hidden">
-          <div className="container mx-auto">
-            <h2 className="text-3xl font-heading font-bold text-center mb-8">
-              <span className="gradient-text">Match The Vibes of IGNITIA 26'</span>
-            </h2>
-            <SphereGallery />
-          </div>
-        </section>
-
-        {/* Category Drawer via CircularGallery */}
-        <div className="container mx-auto px-4 relative z-10 mb-20">
-          <h2 className="text-3xl font-heading font-bold text-center mb-8">
-            <span className="gradient-text">BROWSE IGNITIA'S GALLERY</span>
-          </h2>
-          <motion.div 
-            whileHover={{ scale: 1.02, y: -8 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="bg-background/20 backdrop-blur-md rounded-3xl border border-border/30 shadow-2xl h-[600px] w-full p-4 md:p-8 shimmer-card animated-border-glow"
-          >
-            <div className="w-full h-full relative rounded-2xl overflow-hidden border border-border/10 bg-black/10">
-              <CircularGallery
-                items={galleryCategories}
-                bend={3}
-                borderRadius={0.05}
-                scrollEase={0.05}
-                onItemClick={(item) => setSelectedCategory(item.category || item.text)}
-              />
+              <motion.h1
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, type: "spring" }}
+                className="font-heading text-5xl md:text-7xl font-black tracking-wider uppercase mb-0"
+              >
+                <span className="text-white/40 font-light mr-3 select-none">OUR</span>
+                <span className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(249,115,22,0.4)] animate-pulse">
+                  GALLERY
+                </span>
+              </motion.h1>
             </div>
-          </motion.div>
-        </div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-muted-foreground text-sm max-w-xl mx-auto font-medium mb-12"
+            >
+              Moments from previous editions of IGNITIA
+            </motion.p>
+            
+            {/* View Toggle Slider */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="relative inline-flex p-1.5 bg-white/5 border border-white/10 rounded-full backdrop-blur-md"
+            >
+              {["sphere", "explore"].map((view) => (
+                <button
+                  key={view}
+                  onClick={() => setActiveView(view as "sphere" | "explore")}
+                  className={`relative px-6 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-full transition-colors z-10 ${
+                    activeView === view ? "text-white" : "text-muted-foreground hover:text-white"
+                  }`}
+                >
+                  {activeView === view && (
+                    <motion.div
+                      layoutId="gallery-view-toggle"
+                      className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-600 rounded-full shadow-[0_0_15px_rgba(249,115,22,0.4)] z-[-1]"
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                  {view === "sphere" ? "Moment Sphere" : "Explore Gallery"}
+                </button>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+
+        <AnimatePresence mode="wait">
+          {activeView === "sphere" ? (
+            <motion.div
+              key="sphere-view"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* 3D Image Sphere Section */}
+              <section className="py-12 relative overflow-hidden">
+                <div className="container mx-auto">
+                  <SphereGallery />
+                </div>
+              </section>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="explore-view"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* PhotoGallery Component */}
+              <div className="container mx-auto px-4 relative z-10 mb-20 pt-8">
+                <motion.div 
+                  whileHover={{ scale: 1.01, y: -4 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="bg-background/20 backdrop-blur-md rounded-3xl border border-border/30 shadow-2xl min-h-[750px] w-full p-4 md:p-8 shimmer-card animated-border-glow"
+                >
+                  <div className="w-full h-full relative rounded-2xl overflow-hidden border border-border/10 bg-black/10 flex flex-col items-center justify-center">
+                    <PhotoGallery onCategorySelect={setSelectedCategory} />
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Category Popup Modal (Masonry Grid) */}
         <AnimatePresence>
@@ -225,7 +285,9 @@ const Gallery = () => {
                     {selectedCategory}
                   </h2>
                   <p className="text-muted-foreground mt-4">
-                    Browsing all moments from the {selectedCategory} events.
+                    {selectedCategory === "All Stories" 
+                      ? "Browsing a unified collection of moments across all IGNITIA events." 
+                      : `Browsing all moments from the ${selectedCategory} events.`}
                   </p>
                 </div>
                 

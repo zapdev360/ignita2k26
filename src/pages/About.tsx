@@ -7,6 +7,7 @@ import PageTransition from "@/components/PageTransition";
 import ParticleField from "@/components/ParticleField";
 import AnimatedBlobs from "@/components/AnimatedBlobs";
 import ScrollProgress from "@/components/ScrollProgress";
+import AboutSection3 from "@/components/ui/about-section";
 
 const clubs = [
   { name: "IEM-UEM group", role: "Lead Organizer", icon: Cpu },
@@ -64,26 +65,38 @@ const About = () => {
         >
           <div className="container mx-auto px-4 text-center relative z-10">
             <motion.p
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-sm text-primary uppercase tracking-[0.3em] mb-4"
+              transition={{ duration: 0.5 }}
+              className="text-[10px] md:text-xs text-orange-500 uppercase tracking-[0.4em] mb-3 font-semibold font-mono"
             >
-              About Us
+              OUR STORY & VISION — IGNITIA &apos;26
             </motion.p>
-            <motion.h1
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3, duration: 0.6, ease: "easeOut" }}
-              className="font-heading text-5xl md:text-7xl font-bold mb-6"
-            >
-              About <span className="gradient-text">IGNITIA '26</span>
-            </motion.h1>
+            <div className="relative inline-block mb-3 px-4">
+              {/* Futuristic Cyber brackets */}
+              <div className="absolute left-0 -top-2 w-3 h-3 border-t-2 border-l-2 border-orange-500/50" />
+              <div className="absolute right-0 -top-2 w-3 h-3 border-t-2 border-r-2 border-orange-500/50" />
+              <div className="absolute left-0 -bottom-2 w-3 h-3 border-b-2 border-l-2 border-orange-500/50" />
+              <div className="absolute right-0 -bottom-2 w-3 h-3 border-b-2 border-r-2 border-orange-500/50" />
+
+              <motion.h1
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, type: "spring" }}
+                className="font-heading text-5xl md:text-7xl font-black tracking-wider uppercase mb-0"
+              >
+                <span className="text-white/40 font-light mr-3 select-none">ABOUT</span>
+                <span className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(249,115,22,0.4)] animate-pulse">
+                  IGNITIA
+                </span>
+              </motion.h1>
+            </div>
+
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed"
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-muted-foreground text-sm max-w-xl mx-auto font-medium leading-relaxed"
             >
               The flagship multi-domain event organized by the IEM-UEM group
               at UEM Kolkata — where innovation, creativity, and
@@ -92,80 +105,8 @@ const About = () => {
           </div>
         </motion.section>
 
-        {/* Vision - Perspective tilt reveal */}
-        <motion.section
-          ref={visionRef}
-          style={{
-            rotateX: visionRotateX,
-            y: visionY,
-            transformPerspective: 1000,
-          }}
-          className="section-padding"
-        >
-          <div className="container mx-auto">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <motion.div
-                initial={{ opacity: 0, x: -60 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <Target className="text-primary" size={24} />
-                  <p className="text-sm text-primary uppercase tracking-widest">
-                    Our Vision
-                  </p>
-                </div>
-                <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground mb-6">
-                  Igniting the Next Generation of{" "}
-                  <span className="gradient-text">Innovators</span>
-                </h2>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  IGNITIA '26 aims to create a vibrant ecosystem where students
-                  from diverse backgrounds come together to learn, compete, and
-                  innovate. We believe in the power of technology to transform
-                  ideas into impactful solutions.
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  From high-stakes coding battles to creative cultural
-                  showcases, every event is designed to push boundaries and
-                  inspire the next wave of tech leaders.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 60 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className="grid grid-cols-2 gap-4"
-              >
-                {stats.map((stat, i) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{
-                      delay: i * 0.1,
-                      type: "spring",
-                      stiffness: 200,
-                    }}
-                    whileHover={{ scale: 1.08, rotateZ: 2 }}
-                    className="glass-card bg-card/75 backdrop-blur-2xl p-6 text-center shimmer-card"
-                  >
-                    <span className="font-heading text-3xl font-bold gradient-text">
-                      {stat.value}
-                    </span>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {stat.label}
-                    </p>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-          </div>
-        </motion.section>
+        {/* Vision - Redesigned UI */}
+        <AboutSection3 />
 
         {/* Clubs - Diagonal entry */}
         <section className="section-padding">
