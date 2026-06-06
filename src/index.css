@@ -618,6 +618,18 @@
   50% { opacity: 0.08; }
 }
 
+@keyframes vibrate {
+  0%, 100% { translate: 0px 0px; }
+  20% { translate: -1px 1px; }
+  40% { translate: 1px -1px; }
+  60% { translate: -1px -1px; }
+  80% { translate: 1px 1px; }
+}
+
+.animate-vibrate {
+  animation: vibrate 0.2s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }

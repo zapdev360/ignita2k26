@@ -109,6 +109,7 @@ const events = [
     teamSize: "4-6",
     duration: "Hybrid",
     day: "01",
+    entryFee: "₹100",
     theme: "orange",
     isWide: true,
     arrowTop: true,
@@ -139,6 +140,7 @@ const events = [
     teamSizeLabel: "FORMAT",
     duration: "Online",
     day: "Online",
+    entryFee: "₹100",
     theme: "purple",
     watermark: "02",
     description: "One Match. One Chance. One Champion. Online single-elimination mobile eFootball tournament.",
@@ -165,6 +167,7 @@ const events = [
     teamSizeLabel: "FORMAT",
     duration: "Hybrid",
     day: "02",
+    entryFee: "₹100",
     theme: "pink",
     watermark: "03",
     description: "Ultimate BGMI squad tournament. Hybrid format with online qualifiers and offline grand final.",
@@ -191,6 +194,7 @@ const events = [
     teamSizeLabel: "SOLO",
     duration: "Day 2",
     day: "02",
+    entryFee: "₹100",
     theme: "teal",
     watermark: "04",
     description: "Code without screen visibility. Pure instinct.",
@@ -216,6 +220,7 @@ const events = [
     teamSizeLabel: "FORMAT",
     duration: "15-20 Mins",
     day: "02",
+    entryFee: "₹100",
     theme: "yellow",
     watermark: "05",
     description: "A fast-paced, high-energy Bollywood celebrity guessing challenge.",
@@ -242,6 +247,7 @@ const events = [
     teamSizeLabel: "TEAM / SOLO",
     duration: "1 Day",
     day: "01",
+    entryFee: "₹100",
     theme: "blue",
     isWide: true,
     leftPoolLayout: true,
@@ -269,6 +275,7 @@ const events = [
     teamSizeLabel: "FORMAT",
     duration: "50 Mins",
     day: "01",
+    entryFee: "₹100",
     theme: "pink",
     watermark: "07",
     description: "Draw a Bollywood celebrity chit and design a poster inspired by their aura and signature presence.",
@@ -301,15 +308,15 @@ const InteractiveCardWrapper = ({
   isWide?: boolean;
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
-  
+
   // Motion values for mouse coordinates (normalized from -0.5 to 0.5)
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  
+
   // Springs for buttery smooth physics-based 3D tilting
   const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [6, -6]), { damping: 20, stiffness: 120 });
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-6, 6]), { damping: 20, stiffness: 120 });
-  
+
   // Custom states for hover coordinate gradients
   const [glowPos, setGlowPos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
@@ -319,14 +326,14 @@ const InteractiveCardWrapper = ({
     const rect = cardRef.current.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
-    
+
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
-    
+
     // Normalize coordinates around center (0,0)
     x.set((mouseX / width) - 0.5);
     y.set((mouseY / height) - 0.5);
-    
+
     setGlowPos({ x: mouseX, y: mouseY });
   };
 
@@ -386,18 +393,17 @@ const InteractiveCardWrapper = ({
         transformStyle: "preserve-3d",
         ...getShadowStyle(),
       }}
-      className={`relative group overflow-hidden rounded-[24px] border bg-[#0c0d0e]/85 backdrop-blur-xl transition-[border-color,box-shadow,background-color] duration-300 cursor-pointer ${
-        isWide ? "md:col-span-2" : "md:col-span-1"
-      } ${theme.border}`}
+      className={`relative group overflow-hidden rounded-[24px] border bg-[#0c0d0e]/85 backdrop-blur-xl transition-[border-color,box-shadow,background-color] duration-300 cursor-pointer ${isWide ? "md:col-span-2" : "md:col-span-1"
+        } ${theme.border}`}
     >
       {/* Cyber scanlines / tech scan overlay on hover */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-[0.08] transition-opacity duration-500 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.35)_50%),linear-gradient(90deg,rgba(255,0,0,0.05),rgba(0,255,0,0.02),rgba(0,0,255,0.05))] bg-[length:100%_4px,3px_100%] z-0" 
+      <div
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-[0.08] transition-opacity duration-500 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.35)_50%),linear-gradient(90deg,rgba(255,0,0,0.05),rgba(0,255,0,0.02),rgba(0,0,255,0.05))] bg-[length:100%_4px,3px_100%] z-0"
       />
 
       {/* Cyber ambient micro grid details */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500 bg-[linear-gradient(to_right,gray_1px,transparent_1px),linear-gradient(to_bottom,gray_1px,transparent_1px)] bg-[size:32px_32px] z-0" 
+      <div
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-[0.03] transition-opacity duration-500 bg-[linear-gradient(to_right,gray_1px,transparent_1px),linear-gradient(to_bottom,gray_1px,transparent_1px)] bg-[size:32px_32px] z-0"
       />
 
       {/* Magnetic spotlight radial glow inside card */}
@@ -450,7 +456,7 @@ const EventCard = ({
         >
           {/* Watermark outline text */}
           {"watermark" in event && event.watermark && (
-            <div 
+            <div
               style={{ transform: "translateZ(10px)" }}
               className="absolute top-2 right-4 text-[9rem] font-black text-white/[0.02] select-none font-heading tracking-tighter leading-none pointer-events-none"
             >
@@ -463,7 +469,7 @@ const EventCard = ({
 
           <div className="flex flex-col md:flex-row h-full min-h-[280px]">
             {/* Left Column (only on md and up) */}
-            <div 
+            <div
               style={{ transform: "translateZ(15px)" }}
               className="hidden md:flex flex-col justify-center items-center px-10 border-r border-white/5 relative z-10 w-[200px] shrink-0"
             >
@@ -481,7 +487,7 @@ const EventCard = ({
               {/* Top Header line */}
               <div className="relative flex items-center justify-between mb-6 w-full">
                 <div className="absolute left-0 right-0 top-1/2 h-[1px] bg-white/10 -translate-y-1/2" />
-                <span 
+                <span
                   style={{ transform: "translateZ(20px)" }}
                   className={`relative z-10 px-3 py-1 text-xs font-semibold tracking-wider border rounded-md ${theme.badge}`}
                 >
@@ -490,7 +496,7 @@ const EventCard = ({
               </div>
 
               {/* Main Content */}
-              <div 
+              <div
                 style={{ transform: "translateZ(25px)" }}
                 className="flex gap-4 items-start mb-6"
               >
@@ -518,8 +524,12 @@ const EventCard = ({
                     <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold font-semibold">DAY</span>
                     <span className="text-sm font-semibold text-white">{event.day}</span>
                   </div>
+                  <div>
+                    <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold">ENTRY FEE</span>
+                    <span className="text-sm font-semibold text-white">{event.entryFee}</span>
+                  </div>
                 </div>
-                <button 
+                <button
                   style={{ transform: "translateZ(30px)" }}
                   className={`w-10 h-10 rounded-full border border-white/20 bg-transparent flex items-center justify-center text-white transition-all duration-300 ${theme.arrowHover}`}
                 >
@@ -541,7 +551,7 @@ const EventCard = ({
           <div className="w-full h-full p-8 flex flex-col justify-between min-h-[280px]">
             {/* Watermark outline text */}
             {"watermark" in event && event.watermark && (
-              <div 
+              <div
                 style={{ transform: "translateZ(10px)" }}
                 className="absolute top-2 right-4 text-[9rem] font-black text-white/[0.02] select-none font-heading tracking-tighter leading-none pointer-events-none"
               >
@@ -555,13 +565,13 @@ const EventCard = ({
             {/* Top Line & Category & Circle Arrow */}
             <div className="relative flex items-center justify-between mb-8 w-full">
               <div className="absolute left-0 right-0 top-1/2 h-[1px] bg-white/10 -translate-y-1/2" />
-              <span 
+              <span
                 style={{ transform: "translateZ(20px)" }}
                 className={`relative z-10 px-3 py-1 text-xs font-semibold tracking-wider border rounded-md ${theme.badge}`}
               >
                 {event.category}
               </span>
-              <button 
+              <button
                 style={{ transform: "translateZ(30px)" }}
                 className={`relative z-10 w-10 h-10 rounded-full border border-white/20 bg-[#0c0d0e] flex items-center justify-center text-white transition-all duration-300 ${theme.arrowHover}`}
               >
@@ -571,7 +581,7 @@ const EventCard = ({
 
             {/* Main Body content */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 relative z-10">
-              <div 
+              <div
                 style={{ transform: "translateZ(25px)" }}
                 className="flex gap-4 items-start"
               >
@@ -584,7 +594,7 @@ const EventCard = ({
                 </div>
               </div>
               {/* Massive Prize Pool info */}
-              <div 
+              <div
                 style={{ transform: "translateZ(20px)" }}
                 className="text-left md:text-right shrink-0"
               >
@@ -611,6 +621,10 @@ const EventCard = ({
                   <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold">DAY</span>
                   <span className="text-sm font-semibold text-white">{event.day}</span>
                 </div>
+                <div>
+                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground block font-mono font-semibold">ENTRY FEE</span>
+                  <span className="text-sm font-semibold text-white">{event.entryFee}</span>
+                </div>
               </div>
               <div className="px-3 py-1 text-xs border border-white/10 rounded text-muted-foreground uppercase tracking-widest font-mono">
                 DAY {event.day}
@@ -635,7 +649,7 @@ const EventCard = ({
 
         {/* Watermark outline text */}
         {"watermark" in event && event.watermark && (
-          <div 
+          <div
             style={{ transform: "translateZ(10px)" }}
             className="absolute top-2 right-4 text-[9rem] font-black text-white/[0.02] select-none font-heading tracking-tighter leading-none pointer-events-none"
           >
@@ -645,7 +659,7 @@ const EventCard = ({
 
         {/* Top row */}
         <div className="relative z-10 flex justify-between items-start mb-6">
-          <span 
+          <span
             style={{ transform: "translateZ(20px)" }}
             className={`text-[10px] font-bold tracking-wider px-2 py-0.5 border rounded uppercase ${theme.badge}`}
           >
@@ -658,13 +672,13 @@ const EventCard = ({
 
         {/* Body content */}
         <div className="relative z-10 flex-1 flex flex-col justify-center mb-6">
-          <div 
+          <div
             style={{ transform: "translateZ(25px)" }}
             className={`w-12 h-12 rounded-xl mb-4 flex items-center justify-center shrink-0 border ${theme.iconBg}`}
           >
             <IconComponent className={theme.iconText} size={24} />
           </div>
-          <h3 
+          <h3
             style={{ transform: "translateZ(20px)" }}
             className="text-xl font-bold font-heading text-white mb-2"
           >
@@ -689,8 +703,12 @@ const EventCard = ({
               </span>
               <span className="text-xs font-semibold text-white">{event.teamSize}</span>
             </div>
+            <div>
+              <span className="text-[9px] uppercase tracking-wider text-muted-foreground block font-mono">ENTRY FEE</span>
+              <span className="text-xs font-semibold text-white">{event.entryFee}</span>
+            </div>
           </div>
-          <button 
+          <button
             style={{ transform: "translateZ(30px)" }}
             className={`w-8 h-8 rounded-full border border-white/20 bg-transparent flex items-center justify-center text-white transition-all duration-300 ${theme.arrowHover}`}
           >
@@ -720,79 +738,124 @@ const Events = () => {
         <Navbar />
 
         {/* Hero Header Section */}
-        <section className="relative pt-24 pb-8 flex items-center justify-center">
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-[10px] md:text-xs text-orange-500 uppercase tracking-[0.4em] mb-3 font-semibold font-mono"
-            >
-              COMPETE & CREATE — IGNITIA &apos;26
-            </motion.p>
-            <div className="relative inline-block mb-3 px-4">
-              {/* Futuristic Cyber brackets */}
-              <div className="absolute left-0 -top-2 w-3 h-3 border-t-2 border-l-2 border-orange-500/50" />
-              <div className="absolute right-0 -top-2 w-3 h-3 border-t-2 border-r-2 border-orange-500/50" />
-              <div className="absolute left-0 -bottom-2 w-3 h-3 border-b-2 border-l-2 border-orange-500/50" />
-              <div className="absolute right-0 -bottom-2 w-3 h-3 border-b-2 border-r-2 border-orange-500/50" />
+        <section className="relative pt-28 pb-0 overflow-hidden">
+          {/* Radial purple ambient glow behind title */}
+          <div
+            className="absolute inset-x-0 top-0 h-[500px] pointer-events-none"
+            style={{
+              background: "radial-gradient(ellipse 70% 50% at 60% 40%, rgba(139,92,246,0.18) 0%, transparent 70%)",
+            }}
+          />
 
-              <motion.h1
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, type: "spring" }}
-                className="font-heading text-5xl md:text-7xl font-black tracking-wider uppercase mb-0"
+          {/* Eyebrow */}
+          <motion.p
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center text-[11px] md:text-xs text-primary uppercase tracking-[0.45em] mb-5 font-semibold font-mono"
+          >
+            COMPETE & CREATE &mdash; IGNITIA &apos;26
+          </motion.p>
+
+          {/* Main Title — full-width, centered, perspective tilt */}
+          <div className="relative w-full" style={{ perspective: "800px" }}>
+            <motion.div
+              initial={{ opacity: 0, rotateX: 12, y: 30 }}
+              animate={{ opacity: 1, rotateX: 0, y: 0 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              style={{ transformStyle: "preserve-3d" }}
+            >
+              {/* Shadow/depth clone */}
+              <div
+                aria-hidden
+                className="absolute inset-0 flex items-center justify-center select-none pointer-events-none"
+                style={{ transform: "translateZ(-40px) translateY(12px)" }}
               >
-                <span className="text-white/40 font-light mr-3 select-none">ALL</span>
-                <span className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(249,115,22,0.4)] animate-pulse">
+                <span
+                  className="font-heading font-black uppercase leading-none tracking-tight text-center w-full"
+                  style={{
+                    fontSize: "clamp(4rem, 14vw, 13rem)",
+                    color: "rgba(88,28,235,0.25)",
+                    filter: "blur(8px)",
+                  }}
+                >
+                  ALL EVENTS
+                </span>
+              </div>
+
+              {/* Actual title */}
+              <h1
+                className="font-heading font-black uppercase leading-none tracking-tight w-full text-center relative"
+                style={{ fontSize: "clamp(4rem, 14vw, 13rem)", transformStyle: "preserve-3d" }}
+              >
+                {/* ALL — dimmer, lighter weight */}
+                <span
+                  className="inline-block mr-[0.15em]"
+                  style={{
+                    color: "rgba(255,255,255,0.28)",
+                    fontWeight: 300,
+                    textShadow: "0 2px 20px rgba(139,92,246,0.1)",
+                  }}
+                >
+                  ALL
+                </span>
+
+                {/* EVENTS — full white with 3D purple bloom */}
+                <span
+                  className="inline-block relative"
+                  style={{
+                    color: "#ffffff",
+                    textShadow: [
+                      "0 0 60px rgba(139,92,246,0.9)",
+                      "0 0 120px rgba(139,92,246,0.5)",
+                      "0 2px 0 rgba(88,28,235,0.6)",
+                      "0 4px 0 rgba(68,14,180,0.4)",
+                      "0 8px 20px rgba(0,0,0,0.6)",
+                    ].join(", "),
+                  }}
+                >
                   EVENTS
                 </span>
-              </motion.h1>
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.6 }}
-              transition={{ delay: 0.4 }}
-              className="flex items-center justify-center gap-2 mt-2 mb-6 font-mono text-[9px] text-muted-foreground tracking-[0.25em] uppercase select-none"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-ping" />
-              <span>SEC_01 // COMPETE_AND_CREATE</span>
-              <span className="text-orange-500/50">|</span>
-              <span>SYS_ACTIVE</span>
+              </h1>
             </motion.div>
+          </div>
+
+          {/* Subtitle + filter bar */}
+          <div className="mt-10 mb-0 flex flex-col items-center gap-6 relative z-10 pb-12">
             <motion.p
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-muted-foreground text-sm max-w-xl mx-auto font-medium"
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="text-muted-foreground text-base md:text-lg font-medium"
             >
-              Seven thrilling competitions · UEM Kolkata
+              Seven thrilling competitions &middot; UEM Kolkata
             </motion.p>
+
+            {/* Filter Bar */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.35 }}
+              className="border border-white/10 bg-white/[0.04] backdrop-blur-xl p-1.5 rounded-full flex gap-1 items-center shadow-[0_4px_30px_rgba(0,0,0,0.4)]"
+            >
+              {["ALL", "TECHNICAL", "GAMING", "NON-TECH"].map((filter) => {
+                const isActive = activeFilter === filter;
+                return (
+                  <button
+                    key={filter}
+                    onClick={() => setActiveFilter(filter)}
+                    className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 shrink-0 ${isActive
+                      ? "bg-primary text-white shadow-[0_0_18px_rgba(139,92,246,0.6)]"
+                      : "text-muted-foreground hover:text-white hover:bg-white/8"
+                      }`}
+                  >
+                    {filter}
+                  </button>
+                );
+              })}
+            </motion.div>
           </div>
         </section>
-
-        {/* Filter Capsule Bar */}
-        <div className="relative z-20 flex justify-center mb-12 px-4">
-          <div className="border border-white/5 bg-white/[0.02] backdrop-blur-md p-1.5 rounded-full flex gap-1 items-center max-w-full overflow-x-auto no-scrollbar">
-            {["ALL", "TECHNICAL", "GAMING", "NON-TECH"].map((filter) => {
-              const isActive = activeFilter === filter;
-              return (
-                <button
-                  key={filter}
-                  onClick={() => setActiveFilter(filter)}
-                  className={`px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all duration-300 shrink-0 ${
-                    isActive
-                      ? "bg-gradient-to-r from-orange-500 to-red-600 text-white shadow-[0_0_15px_rgba(249,115,22,0.4)]"
-                      : "text-muted-foreground hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  {filter}
-                </button>
-              );
-            })}
-          </div>
-        </div>
 
         {/* Asymmetrical Grid of Event Cards */}
         <section className="pb-24 px-4 md:px-8 max-w-7xl mx-auto relative z-10">
@@ -961,14 +1024,13 @@ const Events = () => {
                     href="#"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`w-full md:w-auto relative overflow-hidden font-semibold px-8 py-3.5 rounded-xl transition-all duration-300 text-center text-sm ${
-                      selectedEvent.theme === "orange" ? "bg-orange-500 text-white shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_30px_rgba(249,115,22,0.5)]" :
+                    className={`w-full md:w-auto relative overflow-hidden font-semibold px-8 py-3.5 rounded-xl transition-all duration-300 text-center text-sm ${selectedEvent.theme === "orange" ? "bg-orange-500 text-white shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_30px_rgba(249,115,22,0.5)]" :
                       selectedEvent.theme === "purple" ? "bg-purple-500 text-white shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]" :
-                      selectedEvent.theme === "teal" ? "bg-teal-500 text-white shadow-[0_0_20px_rgba(20,184,166,0.3)] hover:shadow-[0_0_30px_rgba(20,184,166,0.5)]" :
-                      selectedEvent.theme === "yellow" ? "bg-amber-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:shadow-[0_0_30px_rgba(245,158,11,0.5)]" :
-                      selectedEvent.theme === "pink" ? "bg-pink-500 text-white shadow-[0_0_20px_rgba(236,72,153,0.3)] hover:shadow-[0_0_30px_rgba(236,72,153,0.5)]" :
-                      "bg-sky-500 text-white shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.5)]"
-                    }`}
+                        selectedEvent.theme === "teal" ? "bg-teal-500 text-white shadow-[0_0_20px_rgba(20,184,166,0.3)] hover:shadow-[0_0_30px_rgba(20,184,166,0.5)]" :
+                          selectedEvent.theme === "yellow" ? "bg-amber-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:shadow-[0_0_30px_rgba(245,158,11,0.5)]" :
+                            selectedEvent.theme === "pink" ? "bg-pink-500 text-white shadow-[0_0_20px_rgba(236,72,153,0.3)] hover:shadow-[0_0_30px_rgba(236,72,153,0.5)]" :
+                              "bg-sky-500 text-white shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.5)]"
+                      }`}
                   >
                     Register Now
                   </motion.a>
@@ -1008,11 +1070,11 @@ const Events = () => {
                 <div className="flex justify-between items-center p-6 md:p-8 border-b border-white/5 relative z-10">
                   <h3 className={`text-xl md:text-2xl font-bold font-heading ${themes[selectedEvent.theme].iconText}`}>
                     {selectedEvent.id === "hackathon" ? "IGNYSIS — Hackathon Rulebook" :
-                     selectedEvent.id === "guess-who" ? "Guess Who — Bollywood Edition" :
-                     selectedEvent.id === "efootball" ? "E-Football Ultimate 11 — Tournament" :
-                     selectedEvent.id === "bgmi" ? "BGMI — Gaming Tournament Rulebook" :
-                     selectedEvent.id === "poster-design" ? "Bollywood Poster Design Challenge" :
-                     `${selectedEvent.title} Rulebook`}
+                      selectedEvent.id === "guess-who" ? "Guess Who — Bollywood Edition" :
+                        selectedEvent.id === "efootball" ? "E-Football Ultimate 11 — Tournament" :
+                          selectedEvent.id === "bgmi" ? "BGMI — Gaming Tournament Rulebook" :
+                            selectedEvent.id === "poster-design" ? "Bollywood Poster Design Challenge" :
+                              `${selectedEvent.title} Rulebook`}
                   </h3>
                   <button
                     onClick={() => setShowRulebook(false)}
@@ -1682,14 +1744,13 @@ const Events = () => {
                 <div className="p-6 md:p-8 border-t border-white/5 flex justify-end bg-[#0c0d0e]/50 relative z-10">
                   <button
                     onClick={() => setShowRulebook(false)}
-                    className={`px-6 py-2.5 rounded-xl font-semibold transition-all duration-300 text-center text-sm ${
-                      selectedEvent.theme === "orange" ? "bg-orange-500 text-white shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_30px_rgba(249,115,22,0.5)]" :
+                    className={`px-6 py-2.5 rounded-xl font-semibold transition-all duration-300 text-center text-sm ${selectedEvent.theme === "orange" ? "bg-orange-500 text-white shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_30px_rgba(249,115,22,0.5)]" :
                       selectedEvent.theme === "purple" ? "bg-purple-500 text-white shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_30px_rgba(168,85,247,0.5)]" :
-                      selectedEvent.theme === "teal" ? "bg-teal-500 text-white shadow-[0_0_20px_rgba(20,184,166,0.3)] hover:shadow-[0_0_30px_rgba(20,184,166,0.5)]" :
-                      selectedEvent.theme === "yellow" ? "bg-amber-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:shadow-[0_0_30px_rgba(245,158,11,0.5)]" :
-                      selectedEvent.theme === "pink" ? "bg-pink-500 text-white shadow-[0_0_20px_rgba(236,72,153,0.3)] hover:shadow-[0_0_30px_rgba(236,72,153,0.5)]" :
-                      "bg-sky-500 text-white shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.5)]"
-                    }`}
+                        selectedEvent.theme === "teal" ? "bg-teal-500 text-white shadow-[0_0_20px_rgba(20,184,166,0.3)] hover:shadow-[0_0_30px_rgba(20,184,166,0.5)]" :
+                          selectedEvent.theme === "yellow" ? "bg-amber-500 text-black shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:shadow-[0_0_30px_rgba(245,158,11,0.5)]" :
+                            selectedEvent.theme === "pink" ? "bg-pink-500 text-white shadow-[0_0_20px_rgba(236,72,153,0.3)] hover:shadow-[0_0_30px_rgba(236,72,153,0.5)]" :
+                              "bg-sky-500 text-white shadow-[0_0_20px_rgba(14,165,233,0.3)] hover:shadow-[0_0_30px_rgba(14,165,233,0.5)]"
+                      }`}
                   >
                     Got it
                   </button>
