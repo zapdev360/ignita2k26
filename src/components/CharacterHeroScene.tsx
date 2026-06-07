@@ -3,7 +3,6 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, useAnimations, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 // Preload the character model
 useGLTF.preload("/3d_models/character-hero-2.glb");
@@ -24,7 +23,7 @@ const CharacterModel = ({ scrollProgressRef }: CharacterModelProps) => {
     scene.traverse((child) => {
       if (!(child as THREE.Mesh).isMesh) return;
       const mesh = child as THREE.Mesh;
-
+     
       // Enable shadow support
       mesh.castShadow = true;
       mesh.receiveShadow = true;
@@ -50,7 +49,7 @@ const CharacterModel = ({ scrollProgressRef }: CharacterModelProps) => {
   // Autoplay all embedded animations (idle states, breathing, stance, etc.)
   useEffect(() => {
     if (!actions || Object.keys(actions).length === 0) return;
-
+   
     // Play the first animation or all animations (fade them in together if needed)
     Object.values(actions).forEach((action) => {
       if (!action) return;
@@ -65,8 +64,8 @@ const CharacterModel = ({ scrollProgressRef }: CharacterModelProps) => {
 
     const time = state.clock.getElapsedTime();
     const progress = scrollProgressRef.current;
-    const { width: viewportWidth, height: viewportHeight } = state.viewport;
-
+    const { width: viewportWidth } = state.viewport;
+   
     // Check if we are on a smaller screen (mobile)
     const isMobile = viewportWidth < 7;
 
@@ -76,19 +75,21 @@ const CharacterModel = ({ scrollProgressRef }: CharacterModelProps) => {
     group.current.position.y = baseTranslateY + hoverOffset;
 
     // 2. Responsive scroll-bound horizontal translation (X-axis)
-    // On mobile, keep the model centered (0). On desktop, slide it from left to right.
-    const leftX = isMobile ? 0 : -viewportWidth * 0.22;
-    const rightX = isMobile ? 0 : viewportWidth * 0.22;
-    const targetX = THREE.MathUtils.lerp(leftX, rightX, progress);
+    // On mobile, keep the model centered (0). On desktop, start centered and shift to the right.
+    const startX = 0;
+    const endX = isMobile ? 0 : viewportWidth * 0.22;
+    const targetX = THREE.MathUtils.lerp(startX, endX, progress);
 
     // 3. Scroll-bound rotation (Y-axis)
-    // Starts at three-quarter view (0.5 rad) facing right-ish, ends at profile view (-Math.PI / 1.8) facing left
-    const targetRotY = THREE.MathUtils.lerp(0.5, -Math.PI / 1.8, progress);
+    // Starts facing forward with slight depth (0.2 rad), ends at profile view (-Math.PI / 1.8) facing left
+    const startRotY = 0.2;
+    const endRotY = isMobile ? -Math.PI / 2.5 : -Math.PI / 1.8;
+    const targetRotY = THREE.MathUtils.lerp(startRotY, endRotY, progress);
 
     // 4. Scroll-bound scale (Z-axis zoom)
-    // Starts close up, ends slightly pulled back/scaled down
-    const startScale = isMobile ? 1.4 : 2.1;
-    const endScale = isMobile ? 1.05 : 1.5;
+    // Starts larger, ends slightly pulled back/scaled down
+    const startScale = isMobile ? 1.35 : 2.0;
+    const endScale = isMobile ? 1.05 : 1.55;
     const targetScale = THREE.MathUtils.lerp(startScale, endScale, progress);
 
     // 5. Mouse pointer tracking (X and Y offsets) for active hover feel
@@ -99,7 +100,7 @@ const CharacterModel = ({ scrollProgressRef }: CharacterModelProps) => {
     group.current.position.x = THREE.MathUtils.lerp(group.current.position.x, targetX, 0.05);
     group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, targetRotY + targetMouseX, 0.05);
     group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, targetMouseY, 0.05);
-
+   
     const nextScale = THREE.MathUtils.lerp(group.current.scale.x, targetScale, 0.05);
     group.current.scale.setScalar(nextScale);
   });
@@ -116,21 +117,19 @@ interface CharacterHeroSceneProps {
 }
 
 export const CharacterHeroScene = ({ scrollProgressRef }: CharacterHeroSceneProps) => {
-  const isMobile = useIsMobile();
   return (
     <div className="absolute inset-0 w-full h-full z-10 pointer-events-auto">
       {/* Visual background grid and glows inside the 3D scene box */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.04)_0%,rgba(0,0,0,0)_70%)] pointer-events-none z-[1]" />
-
+     
       <Canvas
         shadows
         gl={{
-          antialias: !isMobile,
+          antialias: true,
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: 1.2,
           powerPreference: "high-performance",
         }}
-        dpr={isMobile ? 1 : [1, 1.5]}
         camera={{ position: [0, 0, 5], fov: 40, near: 0.1, far: 100 }}
         className="w-full h-full cursor-grab active:cursor-grabbing"
       >
@@ -162,7 +161,7 @@ export const CharacterHeroScene = ({ scrollProgressRef }: CharacterHeroSceneProp
 
         <Suspense fallback={null}>
           <CharacterModel scrollProgressRef={scrollProgressRef} />
-
+         
           <OrbitControls
             enableZoom={false}
             enablePan={false}
@@ -172,19 +171,17 @@ export const CharacterHeroScene = ({ scrollProgressRef }: CharacterHeroSceneProp
             dampingFactor={0.05}
           />
 
-          {!isMobile && (
-            <EffectComposer enableNormalPass={false}>
-              <Bloom
-                intensity={1.2}
-                luminanceThreshold={0.5}
-                luminanceSmoothing={0.5}
-                mipmapBlur
-              />
-            </EffectComposer>
-          )}
+          <EffectComposer enableNormalPass={false}>
+            <Bloom
+              intensity={1.2}
+              luminanceThreshold={0.5}
+              luminanceSmoothing={0.5}
+              mipmapBlur
+            />
+          </EffectComposer>
         </Suspense>
       </Canvas>
-
+     
       {/* Interactive indicator overlay */}
       <div className="absolute bottom-6 right-6 z-10 pointer-events-none opacity-40 bg-black/50 backdrop-blur-sm border border-white/5 px-3 py-1.5 rounded-full text-[9px] text-white uppercase tracking-[0.2em]">
         Drag to Orbit Character
