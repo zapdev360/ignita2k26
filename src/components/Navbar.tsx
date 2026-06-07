@@ -266,6 +266,15 @@ const Navbar = () => {
             )}
           </AnimatePresence>
         </button>
+
+        {/* Static Character GIF sticking out on the right side */}
+        <div className="absolute top-[-5px] md:top-[0px] right-[-5px] md:right-0 pointer-events-none z-10">
+          <img
+            src="/Transparent_gif_flipped.gif"
+            alt="Navbar Character"
+            className="w-28 md:w-40 lg:w-48 h-auto brightness-110 drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]"
+          />
+        </div>
       </motion.div>
 
       <AnimatePresence>

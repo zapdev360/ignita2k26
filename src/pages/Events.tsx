@@ -445,7 +445,7 @@ const EventCard = ({
   const theme = themes[event.theme];
   const IconComponent = event.icon;
 
-  if (event.isWide) {
+  if ("isWide" in event && event.isWide) {
     if ("leftPoolLayout" in event && event.leftPoolLayout) {
       // Quiz-style wide card
       return (
@@ -872,8 +872,17 @@ const Events = () => {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.4 }}
                   key={event.id}
-                  className={event.isWide ? "md:col-span-2" : "md:col-span-1"}
+                  className={event.isWide ? "md:col-span-2 relative" : "md:col-span-1 relative"}
                 >
+                  {event.id === "hackathon" && (
+                    <div className="absolute bottom-full left-[20px] md:left-[50px] -z-10 pointer-events-none -mb-[10px] md:-mb-[15px]">
+                      <img 
+                        src="/download.gif" 
+                        alt="Sci-Fi Hologram" 
+                        className="w-28 md:w-40 h-auto" 
+                      />
+                    </div>
+                  )}
                   <EventCard
                     event={event}
                     onOpenDetails={setSelectedEvent}
@@ -1711,33 +1720,7 @@ const Events = () => {
                         <p className="text-xs">Reach out via the main Ignitia contact channels for any queries about this challenge.</p>
                       </div>
                     </div>
-                  ) : (
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="text-white font-bold font-heading text-base mb-2">General Guidelines</h4>
-                        <p>Welcome to the {selectedEvent.title}. Here are the core guidelines for participation:</p>
-                      </div>
-                      <div>
-                        <h4 className="text-white font-bold font-heading text-sm mb-2">Rules & Format</h4>
-                        <ul className="list-disc pl-5 space-y-1">
-                          {selectedEvent.rules.map((rule, idx) => (
-                            <li key={idx}>{rule}</li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div>
-                        <h4 className="text-white font-bold font-heading text-sm mb-2">Judging Criteria</h4>
-                        <ul className="list-disc pl-5 space-y-1">
-                          {selectedEvent.criteria.map((crit, idx) => (
-                            <li key={idx}>{crit}</li>
-                          ))}
-                        </ul>
-                      </div>
-                      <div className="pt-4 border-t border-white/5 text-xs text-muted-foreground">
-                        Note: Detailed handbook and stage timelines will be shared with registered team leaders before the event.
-                      </div>
-                    </div>
-                  )}
+                  ) : null}
                 </div>
 
                 {/* Footer */}

@@ -1013,7 +1013,7 @@ const Team = () => {
         </section>
 
         {/* 3D Carousel system */}
-        <section className="relative z-10 pb-24 md:pb-36 overflow-hidden">
+        <section className="relative z-10 pb-24 md:pb-36 overflow-x-clip">
           <ThreeDCarousel
             sections={teamSections}
             convenors={convenorsList} 

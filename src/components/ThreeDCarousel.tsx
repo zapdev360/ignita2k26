@@ -69,14 +69,21 @@ export const ThreeDCarousel = ({ sections, convenors, onOpenMemberCard, orbitCol
 
   return (
     <div 
-      className="relative w-full max-w-7xl mx-auto py-12 flex flex-col items-center justify-center overflow-hidden select-none"
+      className="relative w-full max-w-7xl mx-auto pt-24 pb-12 flex flex-col items-center justify-center overflow-x-clip select-none"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Top Section Badge */}
-      <div className="flex items-center gap-2 mb-10 px-4 py-1.5 rounded-full border border-white/10 bg-black/60 backdrop-blur-md z-20">
-        <Layers size={13} className="text-orange-500" />
-        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/90 font-bold">
+      <div className="relative flex items-center gap-2 mb-10 px-4 py-1.5 rounded-full border border-white/10 bg-black/60 backdrop-blur-md z-20">
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 -mb-[20px] pointer-events-none -z-10 drop-shadow-[0_0_15px_rgba(249,115,22,0.4)]">
+          <img 
+            src="/team-mascot.gif" 
+            alt="Team Mascot" 
+            className="w-64 sm:w-80 h-auto object-contain" 
+          />
+        </div>
+        <Layers size={13} className="text-orange-500 relative z-10" />
+        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/90 font-bold relative z-10">
           Team Divisions view
         </span>
       </div>
